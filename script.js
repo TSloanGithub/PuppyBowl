@@ -66,6 +66,15 @@ const addNewPlayer = async (playerObj) => {
 const removePlayer = async (playerId) => {
   try {
     // TODO
+    const players = await fetch(API_URL + API_Players +playerId,{
+      headers: {
+        "content-type": "application/json",
+      },
+      method: "PUT",
+      body: JSON.stringify(playerObj),
+    });
+    const result = await players.json();
+    console.log(result);
   } catch (err) {
     console.error(
       `Whoops, trouble removing player #${playerId} from the roster!`,

@@ -52,6 +52,7 @@ const addNewPlayer = async (playerObj) => {
       body: JSON.stringify(playerObj),
     });
     const result = await players.json();
+    console.log(result);
     //Since i'm updating, do I keep the const "result" as "result" or do I use "players"?
   } catch (err) {
     console.error("Oops, something went wrong with adding that player!", err);

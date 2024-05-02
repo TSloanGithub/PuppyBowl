@@ -1,7 +1,8 @@
 // Use the API_URL variable to make fetch requests to the API.
 // Replace the placeholder with your cohort name (ex: 2109-UNF-HY-WEB-PT)
-const cohortName = "YOUR COHORT NAME HERE";
+const cohortName = "2402-FTB-MT-WEB-PT";
 const API_URL = `https://fsa-puppy-bowl.herokuapp.com/api/${cohortName}`;
+const API_Players = "/players/";
 
 /**
  * Fetches all players from the API.
@@ -10,6 +11,9 @@ const API_URL = `https://fsa-puppy-bowl.herokuapp.com/api/${cohortName}`;
 const fetchAllPlayers = async () => {
   try {
     // TODO
+    const players = await fetch(API_URL + API_Players);
+    const jsPlayers = players.json();
+    console.log(jsPlayers);
   } catch (err) {
     console.error("Uh oh, trouble fetching players!", err);
   }
@@ -23,11 +27,15 @@ const fetchAllPlayers = async () => {
 const fetchSinglePlayer = async (playerId) => {
   try {
     // TODO
+    const players = await fetch(API_URL + API_Players + playerId);
+    const jsPlayers = players.json();
+    console.log(jsPlayers);
   } catch (err) {
     console.error(`Oh no, trouble fetching player #${playerId}!`, err);
   }
 };
-
+fetchSinglePlayer(1); 
+//This runs the function with the input of the playerID. For some reason it does not give my error message even though player 1 does not exist.
 /**
  * Adds a new player to the roster via the API.
  * @param {Object} playerObj the player to add
@@ -36,6 +44,15 @@ const fetchSinglePlayer = async (playerId) => {
 const addNewPlayer = async (playerObj) => {
   try {
     // TODO
+    const players = await fetch(API_URL + API_Players + playerId,{
+      headers: {
+        "content-type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify(playerObj),
+    });
+    const result = await players.json();
+    //Since i'm updating, do I keep the const "result" as "result" or do I use "players"?
   } catch (err) {
     console.error("Oops, something went wrong with adding that player!", err);
   }

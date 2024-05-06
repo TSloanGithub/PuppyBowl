@@ -9,9 +9,21 @@
   </head>
   <body>
     <form id="new-player-form">
-      
+      <label>Puppy Name</label>
+      <input type="text" id="newPuppyName" placeholder="Puppy Name">
+      <label>Breed</label>
+      <input type="text" id="newPuppyBreed" placeholder="Name of Breed">
+      <label>Player Status</label>
+      <select name="newPuppyStatus" size="1" required>
+        <option value="null">Pick an option</option>
+        <option value="field">Field</option>
+        <option value="bench">Bench</option>
+      </select>
+      <button type="submit">Submit Player</button>
     </form>
-    <main></main>
+    <main>
+      <div id = "playerCardContainer"></div>
+    </main>
     <script src="./script.js"></script>
   </body>
 </html>

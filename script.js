@@ -3,7 +3,19 @@
 const cohortName = "2402-FTB-MT-WEB-PT";
 const API_URL = `https://fsa-puppy-bowl.herokuapp.com/api/${cohortName}`;
 const API_Players = "/players/";
-
+let state = {
+  name: [],
+  status: [],
+  imageUrl: [],
+  id: [],
+  breed: [],
+  cohortID: [],
+  // team: [],
+  teamId: [],
+  createdAt: [],
+  updatedAt: [],
+}
+const puppyCardContainer = document.getElementById("playerCardContainer");
 /**
  * Fetches all players from the API.
  * @returns {Object[]} the array of player objects
@@ -12,8 +24,9 @@ const fetchAllPlayers = async () => {
   try {
     // TODO
     const players = await fetch(API_URL + API_Players);
-    const jsPlayers = players.json();
-    console.log(jsPlayers);
+    const playerList = await players.json();
+    console.log(playerList);
+    return playerList.data.players;
   } catch (err) {
     console.error("Uh oh, trouble fetching players!", err);
   }
@@ -28,13 +41,14 @@ const fetchSinglePlayer = async (playerId) => {
   try {
     // TODO
     const players = await fetch(API_URL + API_Players + playerId);
-    const jsPlayers = players.json();
-    console.log(jsPlayers);
+    const playerList = await players.json();
+    console.log(playerList);
+    return playerList.data.player;
   } catch (err) {
     console.error(`Oh no, trouble fetching player #${playerId}!`, err);
   }
 };
-fetchSinglePlayer(1); 
+fetchSinglePlayer(2); 
 //This runs the function with the input of the playerID. For some reason it does not give my error message even though player 1 does not exist.
 /**
  * Adds a new player to the roster via the API.
@@ -83,6 +97,7 @@ const removePlayer = async (playerId) => {
   }
 };
 
+
 /**
  * Updates `<main>` to display a list of all players.
  *
@@ -102,10 +117,80 @@ const removePlayer = async (playerId) => {
  * Note: this function should replace the current contents of `<main>`, not append to it.
  * @param {Object[]} playerList - an array of player objects
  */
-const renderAllPlayers = (playerList) => {
-  // TODO
-};
+// let state = {
+//   name: [],
+//   status: [],
+//   imageUrl: [],
+//   id: [],
+//   breed: [],
+//   cohortID: [],
+//   team: [],
+//   teamID: [],
+//   createdAt: [],
+//   updatedAt: [],
+// }
 
+function createPlayerDetails(player){
+  let playerCard = document.createElement('div');
+  playerCard.id = `div${state.id}`;
+  playerCard.classList.add("player-card");
+
+  let playerName = document.createElement('p');
+  playerName.innertext = `Name: ${state.name}`;
+
+  let playerImage = document.createElement('p');
+  playerImage.src = state.imageUrl;
+  playerImage.alt = state.name + state.breed;
+
+  let playerId = document.createElement('p');
+  playerId.innertext = `Puppy Id: ${state.id}`;
+
+  let playerBreed = document.createElement('p');
+  playerBreed.innertext = `Puppy Breed: ${state.breed}`;
+
+  playerCard.appendChild(playerName);
+  playerCard.appendChild(playerImage);
+  playerCard.appendChild(playerId);
+  playerCard.appendChild(playerBreed);
+
+  return playerCard;
+}
+createPlayerDetails(state);
+
+const renderAllPlayers = async (playerList) => {
+  // TODO
+  //Need to build this out similar to my block21 project
+  try{
+    if (playerList.length !== ''){
+      //resetting the array to be 0 so that when we submit new ones via add player it will not add the same players
+      state.name = [];
+      state.status = [];
+      state.imageUrl = [];
+      state.id = [];
+      state.breed = [];
+      state.cohortID = [];
+      state.teamId = [];
+      state.createdAt = [];
+      state.updatedAt = [];
+
+    playerList.forEach(player => {
+      state.name.push(player.name);
+      state.status.push(player.status);
+      state.imageUrl.push(player.imageUrl);
+      state.id.push(player.id);
+      state.breed.push(player.breed);
+      state.cohortID.push(player.cohortID);
+      state.teamId.push(player.teamId);
+      state.createdAt.push(player.createdAt);
+      state.updatedAt.push(player.updatedAt);
+      
+      return state;
+    })}
+  } catch(e){
+    console.log('No players found');
+  }
+  console.log(state);}
+renderAllPlayers();
 /**
  * Updates `<main>` to display a single player.
  * The player is displayed in a card with the following information:

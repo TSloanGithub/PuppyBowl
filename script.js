@@ -130,7 +130,7 @@ const removePlayer = async (playerId) => {
 //   updatedAt: [],
 // }
 
-function createPlayerDetails(player){
+function createPlayerDetails(state){
   let playerCard = document.createElement('div');
   playerCard.id = `div${state.id}`;
   playerCard.classList.add("player-card");

@@ -131,8 +131,10 @@ const removePlayer = async (playerId) => {
 // }
 
 function createPlayerDetails(state){
+
+  for(let i=0; i < state.length; i++){
   let playerCard = document.createElement('div');
-  playerCard.id = `div${state.id}`;
+  playerCard.id = state.id(i);
   playerCard.classList.add("player-card");
 
   let playerName = document.createElement('p');
@@ -148,12 +150,14 @@ function createPlayerDetails(state){
   let playerBreed = document.createElement('p');
   playerBreed.innertext = `Puppy Breed: ${state.breed}`;
 
+  puppyCardContainer.appendChild(playerCard);
   playerCard.appendChild(playerName);
   playerCard.appendChild(playerImage);
   playerCard.appendChild(playerId);
   playerCard.appendChild(playerBreed);
 
   return playerCard;
+  }
 }
 createPlayerDetails(state);
 
